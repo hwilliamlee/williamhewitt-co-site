@@ -147,7 +147,7 @@
     /* ===================== NAV ===================== */
     header {
       position: sticky; top: 0; z-index: 50;
-      background: color-mix(in srgb, var(--paper) 80%, transparent);
+      background: var(--paper); /* opaque ivory so the header reads the same over every section (was translucent paper+blur, which tinted grey where the navy Firm section showed through) */
       backdrop-filter: blur(14px) saturate(150%);
       border-bottom: 1px solid transparent;
       transition: border-color .4s, background .4s;
