@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>William Hewitt &amp; Company | Private Investment, Acquisitions &amp; Strategic Advisory</title>
+  <meta name="description" content="William Hewitt &amp; Company is a principal-led investment and advisory firm focused on acquisitions, operational improvement, and long-term value creation." />
+
+  <!-- Libre Caslon Text (classical display) + Libre Franklin (clean institutional body) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <!-- non-blocking font load: preload as stylesheet, swap in onload; <noscript> keeps it working without JS -->
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&family=Libre+Franklin:wght@400;500;600&display=swap" onload="this.onload=null;this.rel='stylesheet'" />
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&family=Libre+Franklin:wght@400;500;600&display=swap" /></noscript>
+
+  <style>
+    /* =====================================================================
+       WILLIAM HEWITT & COMPANY — Formal J · "Institutional Navy, Caslon" · FINAL hero (locked 2026-06-12: Threads, slate #5a6b7c, 30 lines @ 2.0px fixed, 50% transparent, 50% speed, raised 1in)
+       Formal A's palette/layout unchanged · typefaces from Formal C (Libre
+       Caslon Text + Libre Franklin). Caslon ships 400/700 (+italic 400) only,
+       so display weights are mapped exactly as Formal C mapped them.
+       ===================================================================== */
+    :root {
+      --paper:    #f5f4ef;   /* cool ivory */
+      --paper-2:  #ebe9e1;
+      --ink:      #0e1c2b;   /* deep navy */
+      --ink-2:    #3e4c5c;
+      --muted:    #626c79;   /* ≥4.5:1 on paper */
+      --line:     #d6d4ca;
+      --accent:   #8c6f3f;   /* muted bronze — the single accent */
+      --accent-2: #a8884e;
+      --accent-ink: #755c33; /* darker bronze: AA-legible (≥4.5:1) on ivory at small text/links — base --accent is ~4.29:1 */
+
+      /* ---- T1 essential semantic role layer (roles → primitives; contract: .planning/UI-SPEC.md §3).
+         Declared as the audit baseline; the status roles below are also wired into the contact form. ---- */
+      --bg:              var(--paper);      /* page canvas (~60%) */
+      --surface:         var(--paper-2);    /* subtle raised fill */
+      --surface-inverse: var(--ink);        /* navy structure panels (~30%) */
+      --text:            var(--ink);        /* primary text on ivory */
+      --text-muted:      var(--ink-2);      /* secondary text */
+      --text-on-inverse: var(--paper);      /* text on navy surfaces */
+      --border:          var(--line);       /* hairlines, field underlines */
+      --action:          var(--ink);        /* primary button fill */
+      --action-hover:    var(--accent-ink); /* button hover fill */
+      --focus-ring:      var(--accent);     /* focus outline / link emphasis */
+      --success:         #2f6b4f;           /* deep AA green on ivory — form confirmation */
+      --danger:          #8a3a2f;           /* warm red on ivory — form validation errors */
+
+      --display: "Libre Caslon Text", Georgia, serif;
+      --body:    "Libre Franklin", system-ui, sans-serif;
+
+      --pad:  clamp(1.25rem, 4vw, 4.5rem);
+      --maxw: 1640px;
+      --gap:  clamp(2rem, 5vw, 7rem);
+      --navh: clamp(5rem, 6vw, 6.1rem);   /* nav height — also drives the full-height hero math */
+
+      /* ---- Type scale (named system; values unchanged — centralizes what were ~20 bespoke
+         per-component clamps). Display = Caslon headings; Text = Franklin body/UI. ---- */
+      --fs-hero:      clamp(3.25rem, 9.2vw, 9.75rem);      /* hero H1 */
+      --fs-hero-sm:   clamp(2rem, 9.5vw, 2.7rem);          /* hero H1, ≤480px */
+      --fs-h2:        clamp(2rem, 4.6vw, 4rem);            /* unified section heading — Practice / Firm / Approach / Contact (~64px desktop) */
+      --fs-statement: var(--fs-h2);                        /* unified with --fs-h2 (was a smaller firm-statement size) */
+      --fs-quote:     var(--fs-h2);                        /* unified with --fs-h2 (was a smaller approach pull-quote size) */
+      --fs-worktitle: clamp(1.5rem, 3vw, 2.6rem);          /* practice row title */
+      --fs-wordmark:  clamp(1.3rem, 2.6vw, 2rem);          /* footer wordmark */
+      --fs-brand:     clamp(1.12rem, 1rem + 0.35vw, 1.32rem); /* nav brand */
+      --fs-focus:     clamp(1.1rem,1.5vw,1.45rem);         /* firm focus list */
+      --fs-crow:      clamp(1.05rem,1.6vw,1.45rem);        /* contact rows */
+      --fs-lede:      clamp(1.1rem, 1rem + 0.5vw, 1.5rem); /* hero lede */
+      --fs-intro:     clamp(1.1rem, 1rem + 0.5vw, 1.5rem); /* section intro — matched to the hero lede (~23px desktop) */
+      --fs-prose:     clamp(1.1rem, 1rem + 0.5vw, 1.5rem); /* section prose (approach / contact / firm) — matched to the hero lede */
+      --fs-workdesc:  clamp(1rem, 0.95rem + 0.32vw, 1.2rem); /* practice row desc — half-step below prose (~20px), operator-chosen 2026-06-17 */
+      --fs-body:      clamp(1rem, 0.95rem + 0.2vw, 1.15rem); /* body base */
+      --fs-arrow:     clamp(1rem, 0.96rem + 0.12vw, 1.08rem);/* arrow link */
+      --fs-btn:       clamp(0.9rem, 0.86rem + 0.16vw, 1.05rem); /* buttons */
+      --fs-navitem:   1.275rem; /* nav links — 20px, operator pick 2026-06-17 (via NAV-SIZE-COMPARE) */
+      --fs-marquee:   clamp(0.78rem, 1.1vw, 0.95rem);      /* marquee */
+      --fs-tag:       clamp(0.66rem, 0.62rem + 0.12vw, 0.76rem); /* eyebrow / tag */
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; overflow-x: clip; } /* clip, not hidden: prevents horizontal scroll WITHOUT making this a scroll container (which would steal scroll-snap from the page) */
+
+    body {
+      font-family: var(--body);
+      background: var(--paper);
+      color: var(--ink);
+      line-height: 1.55;
+      font-size: var(--fs-body);
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+      overflow-x: clip; /* clip, not hidden — see html rule: keeps the document scroll-snap container intact */
+    }
+
+    img, svg, canvas { display: block; max-width: 100%; }
+    a { color: inherit; text-decoration: none; }
+
+    .shell { width: min(100% - (var(--pad) * 2), var(--maxw)); margin-inline: auto; }
+
+    /* keyboard focus — visible everywhere */
+    a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible {
+      outline: 2px solid var(--accent); outline-offset: 4px;
+    }
+    .work:focus-visible { outline-offset: -2px; }
+    /* on dark surfaces the base accent is too dim for an outline — use the light accent */
+    .firm a:focus-visible, .firm button:focus-visible, footer a:focus-visible { outline-color: var(--accent-2); }
+
+    /* ---- shared bits ---- */
+    .tag {
+      font-size: var(--fs-tag);
+      letter-spacing: 0.26em; text-transform: uppercase; font-weight: 500;
+      color: var(--muted);
+    }
+    .accent { color: var(--accent); }
+
+    /* Scalable, recolorable monogram — inline SVG painted with currentColor.
+       Size it anywhere with width/height. Color follows text color. */
+    .wh-mono {
+      display: inline-block; aspect-ratio: 1; flex: 0 0 auto;
+      fill: currentColor; overflow: visible;
+    }
+
+    .btn {
+      --bg: var(--ink); --fg: var(--paper);
+      display: inline-flex; align-items: center; gap: 0.7em;
+      background: var(--bg); color: var(--fg);
+      font-size: var(--fs-btn); font-weight: 500;
+      letter-spacing: 0.02em; padding: 1.05em 1.7em; border: 1px solid var(--ink);
+      border-radius: 100px; cursor: pointer;
+      transition: transform .35s cubic-bezier(.2,.8,.2,1), background .35s, color .35s;
+    }
+    .btn .dot { width: 8px; height: 8px; border-radius: 50%; background: currentColor; opacity: 0.45; transition: transform .35s, opacity .35s; }
+    .btn:hover { transform: translateY(-2px); background: var(--action-hover); border-color: var(--action-hover); } /* --accent-ink darker bronze — keeps paper text ≥4.5:1 */
+    .btn:hover .dot { background: var(--paper); transform: scale(1.6); }
+    .btn.ghost { background: transparent; color: var(--ink); }
+    .btn.ghost:hover { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+    .btn.ghost:hover .dot { background: var(--accent-2); }
+
+    .arrowlink {
+      display: inline-flex; align-items: center; gap: 0.6em;
+      font-weight: 500; font-size: var(--fs-arrow);
+    }
+    .arrowlink .ar { transition: transform .35s cubic-bezier(.2,.8,.2,1); }
+    .arrowlink:hover .ar { transform: translateX(0.4em); }
+
+    /* ===================== NAV ===================== */
+    header {
+      position: sticky; top: 0; z-index: 50;
+      background: color-mix(in srgb, var(--paper) 80%, transparent);
+      backdrop-filter: blur(14px) saturate(150%);
+      border-bottom: 1px solid transparent;
+      transition: border-color .4s, background .4s;
+    }
+    header.scrolled { border-color: var(--line); }
+    .nav { display: flex; align-items: center; justify-content: space-between; height: var(--navh); gap: 1.5rem; }
+    .brand { display: inline-flex; align-items: center; gap: 0.85rem; min-width: 0; color: var(--ink); }
+    .brand .wh-mono { width: clamp(2.75rem, 5vw, 4rem); height: clamp(2.75rem, 5vw, 4rem); color: var(--ink-2); } /* matched to footer .foot-brand emblem size per operator 2026-06-17 (softer color than the wordmark balances the dense emblem) */
+    .brand b { font-family: var(--display); font-weight: 400; font-size: var(--fs-wordmark); letter-spacing: 0.005em; line-height: 1; white-space: nowrap; } /* matched to footer .foot-wordmark size per operator 2026-06-17 */
+    .brand b .amp { color: var(--accent-ink); font-style: italic; } /* darker bronze: AA-legible on ivory at the small nav size (the base accent is ~4.29:1) */
+    .nav-links { display: flex; align-items: center; gap: clamp(1.5rem, 2.5vw, 2.75rem); }
+    .nav-links a.navitem {
+      position: relative; font-size: var(--fs-navitem); font-weight: 500; color: var(--ink-2);
+      padding: 0.4rem 0;
+    }
+    .nav-links a.navitem::after {
+      content: ""; position: absolute; left: 0; bottom: 0; height: 1px; width: 100%;
+      background: var(--ink); transform: scaleX(0); transform-origin: right; transition: transform .4s cubic-bezier(.2,.8,.2,1);
+    }
+    .nav-links a.navitem:hover { color: var(--ink); }
+    .nav-links a.navitem:hover::after { transform: scaleX(1); transform-origin: left; }
+    .nav-cta { padding: 0.82em 1.45em; font-size: 0.95rem; }
+
+    .burger { display: none; width: 44px; height: 44px; border: 1px solid var(--line); border-radius: 50%; background: transparent; cursor: pointer; position: relative; z-index: 60; }
+    .burger span { display: block; width: 18px; height: 1.5px; background: var(--ink); margin: 4px auto; transition: transform .3s cubic-bezier(.2,.8,.2,1), opacity .2s; }
+    /* burger morphs to an ✕ when the drawer is open */
+    .burger.open span:nth-child(1) { transform: translateY(5.5px) rotate(45deg); }
+    .burger.open span:nth-child(2) { opacity: 0; }
+    .burger.open span:nth-child(3) { transform: translateY(-5.5px) rotate(-45deg); }
+
+    /* dimmed backdrop behind the mobile drawer (mobile only) */
+    .nav-scrim { position: fixed; inset: 0; z-index: 40; background: color-mix(in srgb, var(--ink) 52%, transparent); opacity: 0; visibility: hidden; pointer-events: none; transition: opacity .45s cubic-bezier(.2,.8,.2,1), visibility 0s linear .45s; }
+    .nav-scrim.show { opacity: 1; visibility: visible; pointer-events: auto; transition: opacity .45s cubic-bezier(.2,.8,.2,1), visibility 0s linear 0s; }
+    @media (min-width: 901px) { .nav-scrim { display: none; } }
+
+    /* ===================== HERO ===================== */
+    .hero { position: relative; padding-top: clamp(2.5rem, 6vh, 6.5rem); padding-bottom: clamp(2rem, 4vh, 3.5rem); overflow: hidden; }
+    #hero-canvas {
+      position: absolute; inset: 0; width: 100%; height: 100%;
+      z-index: 0; pointer-events: none; opacity: 0.92;
+      -webkit-mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,.18) 26%, #000 62%, #000 100%);
+      mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,.18) 26%, #000 62%, #000 100%);
+    }
+    .hero .shell { position: relative; z-index: 1; }
+    .hero-eyebrow { display: flex; align-items: center; gap: 1rem; margin-bottom: clamp(1.5rem, 3vw, 2.5rem); }
+    .hero-eyebrow .bar { width: clamp(2rem,5vw,4rem); height: 1px; background: var(--ink); opacity: .35; }
+
+    .hero h1 {
+      font-family: var(--display);
+      font-weight: 400;
+      font-size: var(--fs-hero);
+      line-height: 1.06;
+      letter-spacing: -0.012em;
+      color: var(--ink);
+      max-width: 24ch;
+      text-wrap: balance;
+      overflow-wrap: normal;
+    }
+    .hero h1 .em { font-style: italic; color: var(--accent); }
+    .hero-row {
+      display: grid; grid-template-columns: minmax(0, 1fr) minmax(240px, 26%);
+      gap: var(--gap); align-items: end;
+      margin-top: clamp(1.75rem, 3.6vw, 3.5rem);
+    }
+    .hero-lede { font-size: var(--fs-lede); color: var(--ink-2); max-width: 62ch; line-height: 1.45; }
+    .hero-actions { display: flex; flex-direction: column; gap: 1rem; align-items: flex-end; } /* right-aligned: button + "Our practice" share a clean right edge (operator pick 2026-06-17) */
+
+    /* Full-height hero: own the first screen on tablet/desktop, content vertically
+       centered. Scoped to wider + tall-enough viewports so short landscape phones
+       and the natural-height mobile hero are untouched (no clipped/crushed content). */
+    @media (min-width: 768px) and (min-height: 560px) {
+      .hero { min-height: calc(100svh - var(--navh) - 1px); display: flex; flex-direction: column; justify-content: center; } /* -1px: header's border-bottom is in flow too */
+      /* Each snap section fills the screen too. Without min-height the .block sections were only content-tall,
+         so short ones (Firm/Approach/Contact) fell short and the next section peeked in beneath them. */
+      .block { min-height: calc(100svh - var(--navh) - 1px); }
+      /* The three short sections center their content vertically (like the hero) so the spare space is balanced
+         instead of pooling as dead space at the bottom. Practice (01) is left top-aligned: its content already
+         exceeds the viewport, and its section padding would otherwise nudge it up under the sticky nav. */
+      #firm, #approach, #contact { display: flex; flex-direction: column; justify-content: safe center; }
+
+      /* "Pages in a page" — mandatory so each section firmly snaps to fill the screen as you
+         reach it (the deliberate, operator-approved feel). Tall sections do NOT trap scrolling:
+         a snap area taller than the viewport is a valid snap position anywhere it covers the
+         viewport, so its full height stays reachable; scroll-snap-stop:normal (default) lets
+         fast scrolls pass through. scroll-padding-top keeps the snapped top clear of the sticky nav. */
+      html { scroll-snap-type: y mandatory; scroll-padding-top: var(--navh); }
+      .hero, #practice, #firm, #approach, #contact { scroll-snap-align: start; }
+      footer { scroll-snap-align: end; }   /* the footer isn't a section — anchor it to the bottom so mandatory snap can't strand its lower rows (copyright / domain) */
+    }
+
+    /* ===================== MARQUEE ===================== */
+    .marquee { border-block: 1px solid var(--line); padding-block: 1rem; margin-top: clamp(1rem, 2vw, 2rem); overflow: hidden; white-space: nowrap; }
+    /* Static institutional divider — deliberately not animated (restraint over ornament + WCAG 2.2.2: no indefinite auto-motion on aria-hidden content) */
+    .marquee-track { display: inline-flex; align-items: center; gap: 3rem; width: max-content; min-width: 200%; }
+    .marquee span { font-family: var(--body); font-size: var(--fs-marquee); font-weight: 500; letter-spacing: 0.22em; text-transform: uppercase; color: color-mix(in srgb, var(--ink) 62%, var(--paper)); }
+    .marquee .sep { color: color-mix(in srgb, var(--accent) 80%, var(--ink)); letter-spacing: 0; }
+
+    /* ===================== SECTION SCAFFOLD ===================== */
+    section.block { padding-block: clamp(4rem, 7vw, 7rem); }
+    .firm.block { padding-block: clamp(1.75rem, 2.3vw, 2.4rem); } /* tighter than other sections: Firm is the densest (unified 64px heading wraps + two prose paragraphs), so trimmed padding keeps its content within one viewport */
+    #practice { padding-top: clamp(3rem, 5vw, 5rem); }
+    .head { margin-bottom: clamp(2rem, 3.5vw, 3.75rem); }
+    .head h2 { font-family: var(--display); font-weight: 400; font-size: var(--fs-h2); line-height: 0.98; letter-spacing: -0.015em; }
+    .idx { display: block; font-family: var(--display); font-style: italic; color: color-mix(in srgb, var(--accent) 80%, var(--ink)); font-size: 1.4rem; margin-bottom: clamp(0.85rem, 1.5vw, 1.25rem); }
+    .head p { color: var(--ink-2); font-size: var(--fs-intro); max-width: 74ch; }
+
+    /* ===================== PRACTICE ===================== */
+    .work-list { border-top: 1px solid var(--ink); }
+    .work {
+      display: grid; grid-template-columns: 5rem minmax(0,1fr) minmax(0,1.1fr) 3rem;
+      gap: clamp(1rem,3vw,3rem); align-items: center;
+      padding-block: clamp(1.75rem, 3vw, 2.75rem);
+      border-bottom: 1px solid var(--line);
+      position: relative; transition: color .4s cubic-bezier(.2,.8,.2,1);
+    }
+    .work::before {
+      content: ""; position: absolute; inset-block: 0; inset-inline: calc(clamp(1rem,2vw,2rem) * -1); background: var(--ink); z-index: -1;
+      transform: scaleY(0); transform-origin: bottom; transition: transform .4s cubic-bezier(.2,.8,.2,1);
+    }
+    .work:hover { color: var(--paper); }
+    .work:hover::before { transform: scaleY(1); }
+    .work:hover .work-num, .work:hover .work-desc { color: color-mix(in srgb, var(--paper) 75%, transparent); }
+    .work:hover .work-ar { color: var(--accent-2); transform: translateX(0.3em); }
+    .work-num { font-family: var(--display); font-style: italic; color: color-mix(in srgb, var(--accent) 80%, var(--ink)); font-size: 1.05rem; }
+    .work-title { font-family: var(--display); font-weight: 400; font-size: var(--fs-worktitle); line-height: 1.02; letter-spacing: -0.008em; }
+    .work-desc { color: var(--ink-2); font-size: var(--fs-workdesc); } /* half-step ~20px, below the 23px body prose (operator-chosen 2026-06-17) */
+    .work-ar { justify-self: end; font-size: 1.5rem; transition: transform .4s, color .4s; }
+
+    /* ===================== FIRM ===================== */
+    .firm { background: var(--ink); color: var(--paper); }
+    .firm .idx { color: color-mix(in srgb, var(--accent-2) 75%, var(--paper)); }
+    .firm-grid { display: grid; grid-template-columns: minmax(0,1.2fr) minmax(0,0.8fr); gap: var(--gap); align-items: start; }
+    .firm-statement { font-family: var(--display); font-weight: 400; font-size: var(--fs-statement); line-height: 1.18; letter-spacing: -0.01em; } /* 1.18 (was 1.1): clears Caslon descenders (judgment) from the next line's ascenders (value) across screen sizes */
+    .firm-statement .em { font-style: italic; color: var(--accent-2); }
+    .firm-body { color: color-mix(in srgb, var(--paper) 72%, transparent); margin-top: 1.5rem; max-width: 52ch; font-size: var(--fs-prose); }
+    .firm-side { display: grid; gap: 0; border-top: 1px solid color-mix(in srgb, var(--paper) 18%, transparent); }
+    .firm-focus-h { display: block; font-size: 1rem; letter-spacing: 0.16em; text-transform: uppercase; color: color-mix(in srgb, var(--paper) 55%, transparent); padding-block: clamp(0.9rem,1.5vw,1.2rem) 0.35rem; }
+    .firm-focus { list-style: none; margin: 0; padding: 0; }
+    .firm-focus li { padding-block: clamp(0.9rem,1.5vw,1.2rem); border-bottom: 1px solid color-mix(in srgb, var(--paper) 18%, transparent); font-family: var(--display); font-weight: 400; font-size: var(--fs-focus); line-height: 1.2; letter-spacing: -0.01em; }
+
+    /* ===================== APPROACH ===================== */
+    .quote { text-align: center; }
+    .quote .approach { font-family: var(--display); font-weight: 400; font-size: var(--fs-quote); line-height: 1.15; letter-spacing: -0.01em; max-width: 22ch; margin: 0 auto; }
+    .quote .approach .em { font-style: italic; color: var(--accent); }
+
+    /* ===================== CONTACT ===================== */
+    .contact-grid { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: var(--gap); align-items: start; }
+    #contact h2 { font-family: var(--display); font-weight: 400; font-size: var(--fs-h2); line-height: 0.98; letter-spacing: -0.018em; }
+    #contact h2 .em { font-style: italic; color: var(--accent); }
+    .contact-rows { margin-top: clamp(2rem,4vw,3rem); border-top: 1px solid var(--line); }
+    .crow { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; padding-block: 1.25rem; border-bottom: 1px solid var(--line); }
+    .crow .k { font-size: 0.78rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); }
+    .crow .v { font-family: var(--display); font-size: var(--fs-crow); }
+    /* email is a link, not static text like "Where" — give it a resting affordance that warms to bronze on hover */
+    .crow a.v { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; text-decoration-color: var(--line); transition: text-decoration-color .3s; }
+    .crow a.v:hover { text-decoration-color: var(--accent); }
+    form .field { margin-bottom: 1.5rem; }
+    form label { display: block; font-size: 0.76rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.6rem; }
+    form input, form textarea {
+      width: 100%; background: transparent; border: 0; border-bottom: 1px solid var(--line);
+      padding: 0.75rem 0; font-family: var(--body); font-size: 1.1rem; color: var(--ink); transition: border-color .3s;
+    }
+    form input:focus, form textarea:focus { outline: 0; border-color: var(--accent); }
+    form input:focus-visible, form textarea:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+    form textarea { resize: vertical; min-height: 5rem; }
+    form .btn { margin-top: 0.5rem; }
+    .form-status { margin-top: 1rem; font-size: 0.9rem; line-height: 1.5; color: var(--ink-2); min-height: 1.2em; }
+    .form-status a { color: var(--accent-ink); text-decoration: underline; text-underline-offset: 2px; }
+    .form-status.is-error { color: var(--danger); } /* accessible warm-red on ivory for validation messaging */
+    .form-status.is-success { color: var(--success); font-size: 1.05rem; font-weight: 500; line-height: 1.45; } /* AA green + ✓ glyph (never colour-alone); promoted above the label/error tier so the conversion payoff reads as a confirmation, not fine print — still sits below the ~20px contact values and far below the Caslon headings (restrained). Scoped to .is-success so validation errors stay at the smaller base size/weight. */
+    .form-status .fallback { display: block; margin-top: 0.55rem; color: var(--ink-2); font-size: 0.8rem; } /* recovery line held small + muted: two-tier hierarchy under the confirmation (only shown in the success state) */
+
+    /* ===================== FOOTER ===================== */
+    footer { background: var(--ink); color: var(--paper); padding-block: clamp(3.5rem,7vw,6rem) 2.5rem; }
+    .foot-top { display: flex; align-items: flex-end; justify-content: space-between; gap: 2rem; flex-wrap: wrap; }
+    .foot-brand { display: flex; align-items: center; gap: 1rem; color: var(--paper); }
+    .foot-brand .wh-mono { width: clamp(2.75rem, 5vw, 4rem); height: clamp(2.75rem, 5vw, 4rem); }
+    .foot-wordmark { font-family: var(--display); font-weight: 400; font-size: var(--fs-wordmark); letter-spacing: 0.005em; line-height: 1; } /* Caslon has 400/700 only */
+    .foot-wordmark .amp { color: var(--accent-2); font-style: italic; }
+    .foot-nav { display: flex; gap: clamp(1.25rem,2.5vw,2.5rem); flex-wrap: wrap; }
+    .foot-nav a { font-size: 1.4rem; letter-spacing: 0.08em; color: color-mix(in srgb, var(--paper) 65%, transparent); } /* matched to .idx "01 · Practice" per operator 2026-06-17 */
+    .foot-nav a:hover { color: var(--paper); }
+    .foot-rule { height: 1px; background: color-mix(in srgb, var(--paper) 18%, transparent); margin-block: clamp(2.25rem,3.5vw,3.25rem) 1.75rem; }
+    .foot-bottom { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 0.75rem; font-size: 0.8rem; color: color-mix(in srgb, var(--paper) 50%, transparent); }
+
+    /* ===================== REVEAL ===================== */
+    /* Below-the-fold: hidden until scrolled into view (JS adds .in). */
+    .reveal { opacity: 0; transform: translateY(20px); transition: opacity .8s cubic-bezier(.2,.8,.2,1), transform .8s cubic-bezier(.2,.8,.2,1); }
+    .reveal.in { opacity: 1; transform: none; }
+    [data-d="1"]{transition-delay:.08s}[data-d="2"]{transition-delay:.16s}[data-d="3"]{transition-delay:.24s}[data-d="4"]{transition-delay:.32s}
+    /* No-JS / observer-unavailable fallback: never leave below-fold content (incl. the contact form) hidden. */
+    html:not(.js) .reveal { opacity: 1; transform: none; }
+
+    /* Above-the-fold hero: visible by default, intro is a pure-CSS enhancement
+       (never depends on JS/observer timing, so the headline is always full-strength). */
+    .hero .reveal { opacity: 1; transform: none; animation: heroIn .9s cubic-bezier(.2,.8,.2,1) both; }
+    .hero .reveal[data-d="1"] { animation-delay: .06s; }
+    .hero .reveal[data-d="2"] { animation-delay: .16s; }
+    .hero .reveal[data-d="3"] { animation-delay: .26s; }
+    @keyframes heroIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: none; } }
+
+    /* ===================== RESPONSIVE ===================== */
+    @media (max-width: 1000px) {
+      .hero-row { grid-template-columns: minmax(0, 1fr); gap: 2.5rem; align-items: start; }
+      .hero-actions { flex-direction: row; flex-wrap: wrap; align-items: center; } /* row layout ≤1000px: keep the button + link vertically centered, not bottom-aligned */
+      .firm-grid, .contact-grid { grid-template-columns: minmax(0, 1fr); }
+      /* keep a quiet arrow on collapsed rows — touch users have no hover cue that these are links */
+      .work { grid-template-columns: 3rem minmax(0,1fr) 1.5rem; gap: 0.5rem 1.25rem; }
+      .work-desc { grid-column: 2 / 4; }
+      .work-ar { display: block; grid-column: 3; grid-row: 1; align-self: center; color: color-mix(in srgb, var(--accent) 80%, var(--ink)); font-size: 1.25rem; }
+    }
+    /* Nav collapses to the burger drawer ≤900px: the enlarged 1.4rem links + larger brand
+       (operator-chosen 2026-06-17) need a wide bar; below ~900px the brand would collide with
+       the links, so hand off to the drawer earlier than the old 680px threshold. */
+    @media (max-width: 900px) {
+      /* backdrop-filter makes <header> a containing block for fixed children, which
+         would trap the slide-out drawer inside the 80px header. Drop it on mobile so
+         the drawer is viewport-relative (full height); use a solid header instead. */
+      header { background: var(--paper); backdrop-filter: none; -webkit-backdrop-filter: none; }
+      .nav-links { position: fixed; inset: 0 0 0 auto; width: min(78vw, 320px); flex-direction: column; align-items: flex-start; justify-content: center; gap: 1.75rem; background: var(--paper); padding: var(--pad); transform: translateX(100%); visibility: hidden; transition: transform .45s cubic-bezier(.2,.8,.2,1), visibility 0s linear .45s; border-left: 1px solid var(--line); box-shadow: -24px 0 60px rgba(14,28,43,.28); }
+      .nav-links.open { transform: none; visibility: visible; transition: transform .45s cubic-bezier(.2,.8,.2,1), visibility 0s linear 0s; }
+      .burger { display: block; z-index: 60; }
+    }
+    @media (max-width: 680px) {
+      .crow { flex-direction: column; gap: 0.25rem; }
+    }
+    @media (max-width: 480px) {
+      .hero h1 { font-size: var(--fs-hero-sm); line-height: 1.08; max-width: 16ch; overflow-wrap: normal; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; scroll-snap-type: none; }
+      *, *::before, *::after {
+        animation-duration: 0.001ms !important; animation-iteration-count: 1 !important;
+        transition-duration: 0.001ms !important;
+      }
+      .reveal { opacity: 1; transform: none; }
+      #hero-canvas { display: none; }
+    }
+  </style>
+  <script>document.documentElement.classList.add('js');</script>
+</head>
+<body>
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="wh-mono" viewBox="0 0 783 783"><path fill="currentColor" fill-rule="evenodd" transform="translate(0.0 0.5)" d="M 360.5 1.1 C 314.2 5.4, 276.4 14.5, 238.5 30.7 C -46.7 152.3, -83.6 539.2, 173.2 714.3 C 180.2 719.1, 186.2 723, 186.5 723 C 186.7 723, 190.0 724.9, 193.7 727.1 C 382.3 842.7, 639.7 767.5, 740.7 567.5 C 872.4 306.6, 688.7 5.2, 395 0.5 C 381.5 0.3, 366 0.5, 360.5 1.1 M 358.5 35.0 C 341.0 36.1, 314.3 40.8, 296 45.9 C 292.4 46.9, 285.9 48.8, 281.5 50.0 C 277.1 51.3, 266.8 54.9, 258.5 58.2 C 16.7 153.2, -44.0 466.2, 144.1 648.5 C 167.5 671.2, 187.2 685.9, 218.2 703.6 C 323.3 763.7, 463.7 763.0, 570 701.7 C 774.0 584.2, 812.1 302.9, 646.4 137.5 C 571.2 62.4, 474.2 27.9, 358.5 35.0 M 597.3 218.7 C 552.2 219.1, 556.7 218.1, 555.5 227.1 L 554.8 231.7 561.2 232.9 C 569.8 234.5, 579.6 237.8, 581.0 239.5 C 582.4 241.2, 582.3 241.9, 575.6 267.5 C 572.7 278.5, 569.6 290.6, 568.7 294.5 C 566.9 301.8, 558.0 333.1, 552.6 351.0 C 549.9 360.0, 549.1 361.5, 547.0 362.1 C 543.1 363.2, 462.2 363.1, 461.5 362.1 C 461.2 361.6, 464.4 350.4, 468.6 337.3 C 480.5 299.9, 488.6 274.4, 492.0 263.2 C 498.0 243.2, 501.7 238.4, 514.3 233.8 L 520.1 231.7 519.8 225.6 L 519.5 219.5 467.5 219.5 L 415.5 219.5 415.2 226.3 C 414.9 232.8, 415.0 233.0, 417.7 234.2 C 437.4 242.3, 437.3 240.8, 421.5 290.5 C 418.0 301.5, 410.5 324.9, 405.0 342.5 C 394.1 376.7, 393.6 378.0, 392.5 372.8 C 391.8 369.7, 386.3 351.1, 372.0 304 C 361.9 270.7, 357 251.5, 357 245.3 C 357 240.7, 362.4 237.4, 376.3 233.5 L 382 231.9 382 226.6 C 382 218.5, 386.2 219.0, 320.9 219.2 L 262.5 219.5 262.2 226.1 L 261.9 232.6 267.2 233.9 C 281.8 237.6, 295 249.9, 295 260 C 295 260.5, 297.5 269.7, 300.6 280.2 C 303.7 290.8, 307.9 305.6, 310.0 313 C 312.1 320.4, 314.3 327.7, 314.8 329.1 C 316.8 334.3, 299.7 386.2, 277.1 443.7 C 275.0 449.3, 273.2 452.4, 272.8 451.6 C 271.7 449.6, 245.7 370.0, 233.5 331 C 229.8 319.2, 224.1 301.4, 220.9 291.5 C 210.8 260.4, 207.4 245.0, 209.8 241.3 C 210.5 240.2, 215.0 238.0, 224.3 234.2 C 227.0 233.0, 227.1 232.8, 226.8 226.3 L 226.5 219.5 174.5 219.5 L 122.5 219.5 122.2 225.6 L 121.9 231.7 127.8 233.8 C 143.3 239.5, 141.9 236.7, 162.5 302 C 167.3 317.1, 173.8 337.6, 177.0 347.5 C 180.2 357.4, 186.1 375.6, 190.0 388 C 194.0 400.4, 207.6 442, 220.3 480.5 L 243.5 550.5 253 550.8 C 266.2 551.2, 266.3 551.2, 268.8 543.8 C 269.9 540.3, 275.7 524.5, 281.8 508.5 C 287.8 492.6, 295.2 472.3, 298.3 463.5 C 311.1 426.9, 320 400.9, 320 400.0 C 320 397.2, 321.8 399.7, 323.5 404.8 C 333.7 435.3, 352.4 487.9, 365.3 522.1 C 370.6 536.2, 375 548.3, 375 548.9 C 375 550.6, 378.7 551.1, 388.9 550.8 L 398.2 550.5 400.1 545.5 C 403.3 537.1, 433.3 447.4, 443.0 417 C 448.0 401.3, 452.4 387.8, 452.9 387 C 454.6 383.9, 542 384.7, 542 387.8 C 542 389.4, 533.6 420.4, 522.6 459 C 519.1 471.4, 514.1 488.9, 511.5 498 C 502.8 528.8, 499.7 532.5, 481.7 533.8 C 471.8 534.4, 469.9 535.8, 469.0 543.1 C 468.6 546.1, 468.4 548.8, 468.7 549.3 C 469.3 550.4, 579.8 550.2, 582.0 549.0 C 585.1 547.4, 587.1 538.9, 585.4 534.6 C 584.9 533.3, 583.2 533, 576.8 533 C 556.4 533, 555.9 538.0, 585.0 434 C 586.8 427.7, 590.4 415.1, 593.0 406 C 595.7 396.9, 598.6 386.6, 599.5 383 C 600.4 379.4, 603.5 368.2, 606.5 358 C 619.5 312.9, 624.1 296.7, 627.0 284.5 C 636.9 243.9, 639.8 238.8, 656.2 232.8 C 662.4 230.6, 662.1 231.1, 663.3 220 C 663.5 218.3, 662.9 218.3, 597.3 218.7 M 0.3 390.5 C 0.3 394.9, 0.5 396.6, 0.7 394.2 C 0.9 391.9, 0.9 388.3, 0.7 386.2 C 0.5 384.2, 0.3 386.1, 0.3 390.5"/></symbol></svg>
+
+  <!-- ===================== NAV ===================== -->
+  <header id="header">
+    <div class="shell nav">
+      <a href="#top" class="brand" aria-label="William Hewitt &amp; Company, home">
+        <svg class="wh-mono" aria-hidden="true"><use href="#wh-mono"></use></svg>
+        <b>William Hewitt <span class="amp">&amp;</span> Co.</b>
+      </a>
+      <nav class="nav-links" id="navLinks" aria-label="Primary">
+        <a href="#practice" class="navitem">Practice</a>
+        <a href="#firm" class="navitem">Firm</a>
+        <a href="#approach" class="navitem">Approach</a>
+        <a href="#contact" class="btn ghost nav-cta"><span class="dot"></span>Inquire</a>
+      </nav>
+      <button class="burger" id="burger" aria-label="Menu" aria-controls="navLinks" aria-expanded="false"><span></span><span></span><span></span></button>
+    </div>
+  </header>
+  <div class="nav-scrim" id="navScrim" aria-hidden="true"></div>
+
+  <main id="top">
+    <!-- ===================== HERO ===================== -->
+    <section class="hero">
+      <canvas id="hero-canvas" aria-hidden="true"></canvas>
+      <div class="shell">
+        <div class="hero-eyebrow reveal">
+          <span class="bar"></span>
+          <span class="tag" style="font-size:1.4rem;">William Hewitt &amp; Company</span>
+        </div>
+        <h1 class="reveal" data-d="1">Capital Allocation, Discipline, <span class="em">Longevity</span></h1>
+        <div class="hero-row">
+          <p class="hero-lede reveal" data-d="2">We work across private investment, acquisitions, strategy, and performance improvement to help owners, operators, and leadership teams evaluate opportunities, strengthen execution, and build durable value</p>
+          <div class="hero-actions reveal" data-d="3">
+            <a href="#contact" class="btn"><span class="dot"></span>Start a conversation</a>
+            <a href="#practice" class="arrowlink">Our practice <span class="ar" aria-hidden="true">→</span></a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== MARQUEE ===================== -->
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee-track">
+        <span>Private Investment</span><span class="sep">·</span>
+        <span>Acquisitions</span><span class="sep">·</span>
+        <span>Strategy Advisory</span><span class="sep">·</span>
+        <span>Principal Investments</span><span class="sep">·</span>
+        <span>Value Creation</span><span class="sep">·</span>
+        <span>Special Situations</span><span class="sep">·</span>
+        <span>Operational Improvement</span><span class="sep">·</span>
+        <span>Capital Allocation</span><span class="sep">·</span>
+        <span>Business Quality</span><span class="sep">·</span>
+        <span>Long-Term Value Creation</span><span class="sep">·</span>
+        <span>Private Investment</span><span class="sep">·</span>
+        <span>Acquisitions</span><span class="sep">·</span>
+        <span>Strategy Advisory</span><span class="sep">·</span>
+        <span>Principal Investments</span><span class="sep">·</span>
+        <span>Value Creation</span><span class="sep">·</span>
+        <span>Special Situations</span><span class="sep">·</span>
+        <span>Operational Improvement</span><span class="sep">·</span>
+        <span>Capital Allocation</span><span class="sep">·</span>
+        <span>Business Quality</span><span class="sep">·</span>
+        <span>Long-Term Value Creation</span><span class="sep">·</span>
+      </div>
+    </div>
+
+    <!-- ===================== PRACTICE ===================== -->
+    <section class="block" id="practice">
+      <div class="shell">
+        <div class="head reveal">
+          <span class="idx">01 · Practice</span>
+          <h2>What we do</h2>
+          <p style="margin-top:1.5rem;">We focus on businesses where disciplined strategy, operational improvement, and thoughtful capital stewardship can compound value over time</p>
+        </div>
+        <div class="work-list">
+          <a class="work reveal" href="#contact">
+            <span class="work-num">01</span>
+            <span class="work-title">Strategy Advisory</span>
+            <span class="work-desc">We help owners and leadership teams clarify strategy, assess growth opportunities, improve execution, and make better decisions under real operating constraints</span>
+            <span class="work-ar" aria-hidden="true">→</span>
+          </a>
+          <a class="work reveal" href="#contact">
+            <span class="work-num">02</span>
+            <span class="work-title">Principal Investments</span>
+            <span class="work-desc">We acquire and invest in durable businesses with straightforward operating models, stable cash flow, and clear opportunities for disciplined growth</span>
+            <span class="work-ar" aria-hidden="true">→</span>
+          </a>
+          <a class="work reveal" href="#contact">
+            <span class="work-num">03</span>
+            <span class="work-title">Performance Improvement</span>
+            <span class="work-desc">We identify and optimize the operational, commercial, and financial levers that improve performance, strengthen scalability, and support long-term enterprise value</span>
+            <span class="work-ar" aria-hidden="true">→</span>
+          </a>
+          <a class="work reveal" href="#contact">
+            <span class="work-num">04</span>
+            <span class="work-title">Ownership Transitions</span>
+            <span class="work-desc">We provide flexible capital and structural alignment for founders and owners seeking orderly succession, partial liquidity, or a smooth transition of ownership</span>
+            <span class="work-ar" aria-hidden="true">→</span>
+          </a>
+          <a class="work reveal" href="#contact">
+            <span class="work-num">05</span>
+            <span class="work-title">Special Situations</span>
+            <span class="work-desc">We evaluate complex or transitional opportunities where capital, structure, judgment, and execution discipline create superior outcomes</span>
+            <span class="work-ar" aria-hidden="true">→</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== FIRM ===================== -->
+    <section class="block firm" id="firm">
+      <div class="shell">
+        <div class="firm-grid">
+          <div>
+            <span class="idx reveal">02 · Firm</span>
+            <h2 class="firm-statement reveal">We invest and advise selectively, aligning capital and judgment to build <span class="em">permanent value</span></h2>
+            <p class="firm-body reveal" data-d="1">William Hewitt &amp; Company is a private, long-term acquisition firm. Free from the constraints of fixed-term funds, we evaluate companies based on their compounding potential over decades rather than artificial exit timelines. Our mandate is straightforward: protect equity, optimize underlying unit economics, and respect the legacies of the businesses we join.</p>
+            <p class="firm-body reveal" data-d="1" style="margin-top:1.25rem;">Our operational intervention is similarly restrained. We do not disrupt stable organizations for the sake of activity. Instead, we isolate the specific financial and commercial levers that build compounding enterprise value without introducing structural risk.</p>
+          </div>
+          <div class="firm-side reveal" data-d="2">
+            <span class="firm-focus-h">Where we focus</span>
+            <ul class="firm-focus">
+              <li>Private enterprises with stable market positions</li>
+              <li>Earnings durability and structural cash conversion</li>
+              <li>Operating models with high operational transferability</li>
+              <li>Low capital intensity with high structural margins</li>
+              <li>Pathways to organic and sustainable growth</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== APPROACH ===================== -->
+    <section class="block" id="approach">
+      <div class="shell quote reveal">
+        <span class="idx">03 · Approach</span>
+        <h2 class="approach">Value is built, not found. <span class="em">Patiently and deliberately</span></h2>
+        <span class="tag" style="display:block; margin-top:1.75rem; font-size:1.05rem;">Core operating principle</span>
+        <p style="max-width:60ch; margin:2.5rem auto 0; color:var(--ink-2); font-size:var(--fs-prose); line-height:1.55;">We begin with business quality, but we move with patience. We focus entirely on preserving what works, optimizing what matters, and compounding real value through disciplined execution.</p>
+      </div>
+    </section>
+
+    <!-- ===================== CONTACT ===================== -->
+    <section class="block" id="contact" style="border-top:1px solid var(--line);">
+      <div class="shell contact-grid">
+        <div>
+          <span class="idx reveal">04 · Contact</span>
+          <h2 class="reveal" data-d="1">Begin the <span class="em">conversation</span></h2>
+          <p class="reveal" data-d="1" style="margin-top:1.5rem; color:var(--ink-2); max-width:44ch; font-size:var(--fs-prose);">Send us a brief note and we'll get back to you.</p>
+          <div class="contact-rows reveal" data-d="2">
+            <div class="crow"><span class="k">Email</span><a class="v" href="mailto:hello@williamhewitt.co">hello@williamhewitt.co</a></div>
+            <div class="crow"><span class="k">Where</span><span class="v">New York, NY</span></div>
+          </div>
+        </div>
+        <form class="reveal" data-d="2" id="contactForm" novalidate>
+          <div class="field"><label for="f-name">Name</label><input id="f-name" name="name" type="text" autocomplete="name" placeholder="Your name" required /></div>
+          <div class="field"><label for="f-email">Email</label><input id="f-email" name="email" type="email" autocomplete="email" placeholder="you@example.com" required /></div>
+          <div class="field"><label for="f-need">How can we help?</label><textarea id="f-need" name="need" autocomplete="off" placeholder="Describe your business, opportunity, or situation" required></textarea></div>
+          <button class="btn" type="submit"><span class="dot"></span>Send inquiry</button>
+          <p class="form-status" id="formStatus" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer>
+    <div class="shell">
+      <div class="foot-top">
+        <div class="foot-brand">
+          <svg class="wh-mono" aria-hidden="true"><use href="#wh-mono"></use></svg>
+          <span class="foot-wordmark">William Hewitt <span class="amp">&amp;</span> Company</span>
+        </div>
+        <nav class="foot-nav" aria-label="Footer">
+          <a href="#practice">Practice</a>
+          <a href="#firm">Firm</a>
+          <a href="#approach">Approach</a>
+          <a href="#contact">Inquire</a>
+        </nav>
+      </div>
+      <div class="foot-rule"></div>
+      <div class="foot-bottom">
+        <span>© <span id="yr"></span> William Hewitt &amp; Company. All rights reserved.</span>
+        <span>Private Investment · Acquisitions · Strategy · Value Creation</span>
+        <span>williamhewitt.co</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Nav: scrolled state + mobile menu
+    const header = document.getElementById('header');
+    const burger = document.getElementById('burger');
+    const navLinks = document.getElementById('navLinks');
+    const navScrim = document.getElementById('navScrim');
+    addEventListener('scroll', () => header.classList.toggle('scrolled', scrollY > 8), { passive: true });
+    const mobileMenu = matchMedia('(max-width: 900px)'); /* matches the burger-drawer CSS breakpoint */
+    const pageRoots = [document.getElementById('top'), document.querySelector('footer')].filter(Boolean);
+    const brandLink = document.querySelector('.brand');   // sits in the sticky header, above the scrim — must be neutralized with the drawer
+    let menuReturnFocus = null;
+
+    function setMenu(open, { returnFocus = true, moveFocus = true } = {}) {
+      open = Boolean(open && mobileMenu.matches);
+      navLinks.classList.toggle('open', open);
+      burger.classList.toggle('open', open);
+      navScrim.classList.toggle('show', open);
+      burger.setAttribute('aria-expanded', String(open));
+      burger.setAttribute('aria-label', open ? 'Close menu' : 'Menu');
+      navLinks.inert = !open && mobileMenu.matches;   // drawer not focusable while off-canvas
+      pageRoots.forEach(el => { el.inert = open; });   // neutralize the page behind the open drawer
+      if (brandLink) brandLink.inert = open;           // brand sits above the scrim; keep it out of the interaction model while open
+
+      if (open) {
+        menuReturnFocus = document.activeElement;
+        if (moveFocus) requestAnimationFrame(() => navLinks.querySelector('a')?.focus());
+      } else {
+        if (returnFocus && menuReturnFocus?.isConnected) menuReturnFocus.focus();
+        menuReturnFocus = null;
+      }
+    }
+
+    function syncMenuMode() {
+      if (!mobileMenu.matches) {
+        setMenu(false, { returnFocus: false, moveFocus: false });
+        navLinks.inert = false;          // desktop nav is always interactive
+      } else if (!navLinks.classList.contains('open')) {
+        navLinks.inert = true;
+      }
+    }
+
+    burger.addEventListener('click', () => setMenu(!navLinks.classList.contains('open')));
+    navScrim.addEventListener('click', () => setMenu(false));
+    navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setMenu(false, { returnFocus: false })));
+    addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') { setMenu(false); return; }
+      if (e.key !== 'Tab' || !navLinks.classList.contains('open')) return;
+      const focusables = [...navLinks.querySelectorAll('a'), burger];
+      const first = focusables[0];
+      const last = focusables[focusables.length - 1];
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    });
+    mobileMenu.addEventListener('change', syncMenuMode);
+    syncMenuMode();
+    document.getElementById('yr').textContent = new Date().getFullYear();
+
+    // Contact: compose a mailto from the fields (no backend — the operator's mail client sends it).
+    const contactForm = document.getElementById('contactForm');
+    const formStatus = document.getElementById('formStatus');
+    contactForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      // validate first — preventDefault bypasses native submit, so trigger it manually
+      const controls = [...contactForm.elements].filter(el => el.willValidate);
+      if (!contactForm.checkValidity()) {
+        controls.forEach(el => el.setAttribute('aria-invalid', String(!el.checkValidity())));
+        formStatus.classList.remove('is-success');
+        formStatus.classList.add('is-error');
+        formStatus.textContent = 'Please complete the required fields with a valid email.';
+        contactForm.reportValidity();
+        return;
+      }
+      controls.forEach(el => el.removeAttribute('aria-invalid'));
+      formStatus.classList.remove('is-error');
+      const name = document.getElementById('f-name').value.trim();
+      const email = document.getElementById('f-email').value.trim();
+      const need = document.getElementById('f-need').value.trim();
+      const subject = name ? `Inquiry from ${name}` : 'Inquiry';
+      const lines = [];
+      if (need) lines.push(need);
+      if (name || email) lines.push('', `${name}${name && email ? ', ' : ''}${email}`);
+      const body = lines.join('\r\n');
+      // Closed-loop confirmation (operator-approved copy, locked 2026-06-15). The ✓ glyph + green
+      // means status is never signalled by colour alone; the neutral fallback line stays visible so
+      // the recovery path survives if no mail handler opens (the conversion action is never silent).
+      formStatus.classList.remove('is-error');
+      formStatus.classList.add('is-success');
+      formStatus.innerHTML = '✓ Thank you. We will be in touch with you shortly.<span class="fallback">Your email app should open. If nothing happens, write to <a href="mailto:hello@williamhewitt.co">hello@williamhewitt.co</a>.</span>';
+      window.location.href = `mailto:hello@williamhewitt.co?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    });
+
+    // Reveal on scroll
+    // Observe below-the-fold reveals; hero reveals are already visible via CSS (harmless if observed too).
+    // If IntersectionObserver is unavailable, reveal everything immediately — never strand below-fold content.
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver((es) => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
+      document.querySelectorAll('.reveal').forEach(el => { if (!el.closest('.hero')) io.observe(el); });
+    } else {
+      document.querySelectorAll('.reveal').forEach(el => el.classList.add('in'));
+    }
+
+    // ===================== HERO MOTION — "Threads" =====================
+    // Flowing thread-lines, self-running. Ported to vanilla WebGL from reactbits.dev
+    // (David Haz, MIT + Commons Clause), drawn as ink on ivory. Layout (weave
+    // center / vertical spread / mirrored twin), color pair, and weight are the
+    // consts below (identical colors = solid). No libraries.
+    (function () {
+      const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (reduce) return;
+      const canvas = document.getElementById('hero-canvas');
+      const hero = canvas.parentElement;
+      const gl = canvas.getContext('webgl', { alpha: true, premultipliedAlpha: false, antialias: true });
+      if (!gl) return;
+
+      const COLOR_A = [0.353, 0.420, 0.486];  // left side of the weave
+      const COLOR_B = [0.353, 0.420, 0.486];  // right side of the weave
+      const AMPLITUDE = 1.05;
+      const LIFT_PX = 96;  // raise the weave by this many CSS pixels (96 = 1 inch)
+      const SPEED = 0.50; // 1.0 = the approved pace
+
+      const vert = `attribute vec2 position; void main(){ gl_Position = vec4(position, 0.0, 1.0); }`;
+      const frag = `precision highp float;
+        uniform float iTime; uniform vec3 iResolution; uniform vec3 uColorA; uniform vec3 uColorB;
+        uniform float uAmplitude; uniform vec2 uMouse;
+        uniform float uDPR;          // device pixel ratio — keeps thread thickness in fixed CSS px
+        #define PI 3.1415926538
+        const int u_line_count = 30; const float u_line_width = 2.0; const float u_line_blur = 4.4;
+        const float OPACITY = 0.4; // 0.8 = standard; this file is 50% more transparent
+        uniform float uCenter;       // weave center (0..1 of hero height), set from JS
+        const float DIST = 0.32;        // vertical spread of the weave
+        const float MIRROR = 0.0;    // 1.0 adds a vertically mirrored twin
+        float Perlin2D(vec2 P){ vec2 Pi=floor(P); vec4 Pf_Pfmin1=P.xyxy-vec4(Pi,Pi+1.0);
+          vec4 Pt=vec4(Pi.xy,Pi.xy+1.0); Pt=Pt-floor(Pt*(1.0/71.0))*71.0; Pt+=vec2(26.0,161.0).xyxy;
+          Pt*=Pt; Pt=Pt.xzxz*Pt.yyww; vec4 hash_x=fract(Pt*(1.0/951.135664)); vec4 hash_y=fract(Pt*(1.0/642.949883));
+          vec4 grad_x=hash_x-0.49999; vec4 grad_y=hash_y-0.49999;
+          vec4 grad_results=inversesqrt(grad_x*grad_x+grad_y*grad_y)*(grad_x*Pf_Pfmin1.xzxz+grad_y*Pf_Pfmin1.yyww);
+          grad_results*=1.4142135623730950;
+          vec2 blend=Pf_Pfmin1.xy*Pf_Pfmin1.xy*Pf_Pfmin1.xy*(Pf_Pfmin1.xy*(Pf_Pfmin1.xy*6.0-15.0)+10.0);
+          vec4 blend2=vec4(blend,vec2(1.0-blend)); return dot(grad_results,blend2.zxzx*blend2.wwyy); }
+        float pixel(float count, vec2 resolution){ return (1.0/max(resolution.x,resolution.y))*count; }
+        float lineFn(vec2 st,float width,float perc,float offset,vec2 mouse,float time,float amplitude,float distance){
+          float split_offset=(perc*0.4); float split_point=0.1+split_offset;
+          float amplitude_normal=smoothstep(split_point,0.7,st.x); float amplitude_strength=0.5;
+          float finalAmplitude=amplitude_normal*amplitude_strength*amplitude*(1.0+(mouse.y-0.5)*0.2);
+          float time_scaled=time/10.0+(mouse.x-0.5)*1.0;
+          float blur=smoothstep(split_point,split_point+0.05,st.x)*perc;
+          float xnoise=mix(Perlin2D(vec2(time_scaled,st.x+perc)*2.5),Perlin2D(vec2(time_scaled,st.x+time_scaled)*3.5)/1.5,st.x*0.3);
+          float y=uCenter+(perc-0.5)*distance+xnoise/2.0*finalAmplitude;
+          float line_start=smoothstep(y+(width/2.0)+(u_line_blur*uDPR/iResolution.y*blur),y,st.y);
+          float line_end=smoothstep(y,y-(width/2.0)-(u_line_blur*uDPR/iResolution.y*blur),st.y);
+          return clamp((line_start-line_end)*(1.0-smoothstep(0.0,1.0,pow(perc,0.3))),0.0,1.0); }
+        void main(){ vec2 uv=gl_FragCoord.xy/iResolution.xy; float line_strength=1.0;
+          for(int i=0;i<u_line_count;i++){ float p=float(i)/float(u_line_count);
+            float w=u_line_width*uDPR/iResolution.y*(1.0-p);  // fixed CSS-px thickness at any window size
+            line_strength*=(1.0-lineFn(uv,w,p,(PI*1.0)*p,uMouse,iTime,uAmplitude,DIST));
+            if (MIRROR > 0.5) {
+              line_strength*=(1.0-lineFn(vec2(uv.x,1.0-uv.y),w,p,(PI*1.0)*p,uMouse,iTime,uAmplitude,DIST));
+            } }
+          float colorVal=1.0-line_strength;
+          // ink-on-ivory: pure color, strength drives alpha only (no blend, no
+          // color×strength — both darken light hues toward black on this page)
+          vec3 col = mix(uColorA, uColorB, uv.x);
+          gl_FragColor=vec4(col, colorVal*OPACITY); }`;
+
+      function compile(type, src) { const s = gl.createShader(type); gl.shaderSource(s, src); gl.compileShader(s);
+        if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) { console.warn(gl.getShaderInfoLog(s)); } return s; }
+      const prog = gl.createProgram();
+      gl.attachShader(prog, compile(gl.VERTEX_SHADER, vert));
+      gl.attachShader(prog, compile(gl.FRAGMENT_SHADER, frag));
+      gl.linkProgram(prog); gl.useProgram(prog);
+
+      const buf = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+      gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl.STATIC_DRAW);
+      const loc = gl.getAttribLocation(prog, 'position');
+      gl.enableVertexAttribArray(loc); gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
+
+      const U = n => gl.getUniformLocation(prog, n);
+      const uTime = U('iTime'), uRes = U('iResolution'),
+            uAmp = U('uAmplitude'), uMouse = U('uMouse');
+      gl.uniform3f(U('uColorA'), COLOR_A[0], COLOR_A[1], COLOR_A[2]);
+      gl.uniform3f(U('uColorB'), COLOR_B[0], COLOR_B[1], COLOR_B[2]);
+      gl.uniform1f(uAmp, AMPLITUDE); gl.uniform2f(uMouse, 0.5, 0.5);
+      gl.clearColor(0, 0, 0, 0);
+
+      function size() {
+        const DPR = Math.min(devicePixelRatio || 1, 2);
+        const W = hero.clientWidth, H = hero.clientHeight;
+        canvas.width = W * DPR; canvas.height = H * DPR;
+        canvas.style.width = W + 'px'; canvas.style.height = H + 'px';
+        gl.viewport(0, 0, canvas.width, canvas.height);
+        gl.uniform3f(uRes, canvas.width, canvas.height, canvas.width / canvas.height);
+        gl.uniform1f(U('uCenter'), 0.5 + (LIFT_PX * DPR) / canvas.height);
+        gl.uniform1f(U('uDPR'), DPR);
+      }
+      let raf;
+      function frame(t) { gl.uniform1f(uTime, t * 0.001 * SPEED); gl.clear(gl.COLOR_BUFFER_BIT);
+        gl.drawArrays(gl.TRIANGLES, 0, 3); raf = requestAnimationFrame(frame); }
+
+      new ResizeObserver(size).observe(hero); size(); raf = requestAnimationFrame(frame);
+      // pause when off-screen
+      new IntersectionObserver((es) => es.forEach(e => {
+        if (e.isIntersecting) { if (!raf) raf = requestAnimationFrame(frame); }
+        else { cancelAnimationFrame(raf); raf = null; }
+      }), { threshold: 0 }).observe(hero);
+    })();
+  </script>
+</body>
+</html>
