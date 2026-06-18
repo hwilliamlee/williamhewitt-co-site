@@ -240,10 +240,15 @@
 
     /* ===================== MARQUEE ===================== */
     .marquee { border-block: 1px solid var(--line); padding-block: 1rem; margin-top: clamp(1rem, 2vw, 2rem); overflow: hidden; white-space: nowrap; }
-    /* Static institutional divider — deliberately not animated (restraint over ornament + WCAG 2.2.2: no indefinite auto-motion on aria-hidden content) */
-    .marquee-track { display: inline-flex; align-items: center; gap: 3rem; width: max-content; min-width: 200%; }
+    /* Disciplines ticker — slow auto-scroll, restored 2026-06-17 per operator (the static version read as broken/clipped). Decorative (aria-hidden).
+       a11y: motion stops under prefers-reduced-motion (global rule below) and pauses on hover; kept slow (55s) and low-contrast. */
+    .marquee-track { display: inline-flex; align-items: center; width: max-content; animation: marquee-scroll 55s linear infinite; }
+    .marquee:hover .marquee-track { animation-play-state: paused; }
+    /* The list is duplicated in the markup as 2 identical copies; spacing lives on the separators (not a flex `gap`) so the
+       row tiles perfectly and translateX(-50%) lands exactly one copy over — no jump on loop. */
+    @keyframes marquee-scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
     .marquee span { font-family: var(--body); font-size: var(--fs-marquee); font-weight: 500; letter-spacing: 0.22em; text-transform: uppercase; color: color-mix(in srgb, var(--ink) 62%, var(--paper)); }
-    .marquee .sep { color: color-mix(in srgb, var(--accent) 80%, var(--ink)); letter-spacing: 0; }
+    .marquee .sep { color: color-mix(in srgb, var(--accent) 80%, var(--ink)); letter-spacing: 0; margin-inline: 1.75rem; }
 
     /* ===================== SECTION SCAFFOLD ===================== */
     section.block { padding-block: clamp(4rem, 7vw, 7rem); }
@@ -251,7 +256,7 @@
     #practice { padding-top: clamp(3rem, 5vw, 5rem); }
     .head { margin-bottom: clamp(2rem, 3.5vw, 3.75rem); }
     .head h2 { font-family: var(--display); font-weight: 400; font-size: var(--fs-h2); line-height: 0.98; letter-spacing: -0.015em; }
-    .idx { display: block; font-family: var(--display); font-style: italic; color: color-mix(in srgb, var(--accent) 80%, var(--ink)); font-size: 1.4rem; margin-bottom: clamp(0.85rem, 1.5vw, 1.25rem); }
+    .idx { display: block; font-family: var(--display); font-style: italic; color: color-mix(in srgb, var(--accent) 80%, var(--ink)); font-size: clamp(0.82rem, 0.6rem + 1.1vw, 1.4rem); margin-bottom: clamp(0.85rem, 1.5vw, 1.25rem); } /* scales like the hero eyebrow: 1.4rem desktop, ~14px phone (was a fixed 1.4rem that dwarfed the headline on mobile) */
     .head p { color: var(--ink-2); font-size: var(--fs-intro); max-width: 74ch; }
 
     /* ===================== PRACTICE ===================== */
@@ -328,7 +333,7 @@
     .foot-wordmark { font-family: var(--display); font-weight: 400; font-size: var(--fs-wordmark); letter-spacing: 0.005em; line-height: 1; } /* Caslon has 400/700 only */
     .foot-wordmark .amp { color: var(--accent-2); font-style: italic; }
     .foot-nav { display: flex; gap: clamp(1.25rem,2.5vw,2.5rem); flex-wrap: wrap; }
-    .foot-nav a { font-size: 1.4rem; letter-spacing: 0.08em; color: color-mix(in srgb, var(--paper) 65%, transparent); } /* matched to .idx "01 · Practice" per operator 2026-06-17 */
+    .foot-nav a { font-size: clamp(1rem, 0.8rem + 0.9vw, 1.4rem); letter-spacing: 0.08em; color: color-mix(in srgb, var(--paper) 65%, transparent); } /* 1.4rem desktop (matches .idx), scales to ~16px phone */
     .foot-nav a:hover { color: var(--paper); }
     .foot-rule { height: 1px; background: color-mix(in srgb, var(--paper) 18%, transparent); margin-block: clamp(2.25rem,3.5vw,3.25rem) 1.75rem; }
     .foot-bottom { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 0.75rem; font-size: 0.8rem; color: color-mix(in srgb, var(--paper) 50%, transparent); }
