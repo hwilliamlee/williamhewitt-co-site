@@ -256,7 +256,7 @@
 
     /* ===================== SECTION SCAFFOLD ===================== */
     section.block { padding-block: clamp(4rem, 7vw, 7rem); }
-    .firm.block { padding-block: clamp(1.75rem, 2.3vw, 2.4rem); } /* tighter than other sections: Firm is the densest (unified 64px heading wraps + two prose paragraphs), so trimmed padding keeps its content within one viewport */
+    .firm.block { padding-block: clamp(1.75rem, 2.3vw, 2.4rem); } /* tighter than other sections: Firm carries the statement headline + one prose paragraph + the focus list, so trimmed padding keeps its content within one viewport */
     #practice { padding-top: clamp(3rem, 5vw, 5rem); }
     .head { margin-bottom: clamp(2rem, 3.5vw, 3.75rem); }
     .head h2 { font-family: var(--display); font-weight: 400; font-size: var(--fs-h2); line-height: 0.98; letter-spacing: -0.015em; }
@@ -289,7 +289,7 @@
     .firm { background: var(--ink); color: var(--paper); }
     .firm .idx { color: color-mix(in srgb, var(--accent-2) 75%, var(--paper)); }
     .firm-grid { display: grid; grid-template-columns: minmax(0,1.2fr) minmax(0,0.8fr); gap: var(--gap); align-items: start; }
-    .firm-statement { font-family: var(--display); font-weight: 400; font-size: clamp(3rem, 6.9vw, 4rem); line-height: 1.18; letter-spacing: -0.01em; } /* own clamp (not --fs-h2): ~48px phone / 64px desktop, so the statement keeps its ~2.7× dominance over body prose on mobile (was collapsing to 32px = section-heading size). 1.18 line-height clears Caslon descenders. */
+    .firm-statement { font-family: var(--display); font-weight: 400; font-size: clamp(3rem, 6.9vw, 4rem); line-height: 1.18; letter-spacing: -0.01em; } /* own clamp (not --fs-h2): ~64px desktop; on phone the ≤767 override drops it to 1.6rem (~25.6px) to match the reduced mobile heading scale. 1.18 line-height clears Caslon descenders. */
     .firm-statement .em { font-style: italic; color: var(--accent-2); }
     .firm-body { color: color-mix(in srgb, var(--paper) 72%, transparent); margin-top: 1.5rem; max-width: 52ch; font-size: var(--fs-prose); }
     .firm-side { display: grid; gap: 0; border-top: 1px solid color-mix(in srgb, var(--paper) 18%, transparent); }
@@ -322,7 +322,7 @@
     form input:focus, form textarea:focus { outline: 0; border-color: var(--accent); }
     form input:focus-visible, form textarea:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
     form textarea { resize: vertical; min-height: 5rem; }
-    form .btn { margin-top: 0.5rem; }
+    form .btn { margin-top: 1rem; display: flex; width: fit-content; margin-left: auto; padding: 1.2em 2.1em; font-size: clamp(0.98rem, 0.92rem + 0.22vw, 1.14rem); } /* enlarged CTA pushed to the right edge (reviewer Contact #3, operator-approved 2026-06-18) */
     .form-status { margin-top: 1rem; font-size: 0.9rem; line-height: 1.5; color: var(--ink-2); min-height: 1.2em; }
     .form-status a { color: var(--accent-ink); text-decoration: underline; text-underline-offset: 2px; }
     .form-status.is-error { color: var(--danger); } /* accessible warm-red on ivory for validation messaging */
@@ -538,9 +538,8 @@
         <div class="firm-grid">
           <div>
             <span class="idx reveal">02 · Firm</span>
-            <h2 class="firm-statement reveal">We invest and advise selectively, aligning capital and judgment to build <span class="em">permanent value</span></h2>
-            <p class="firm-body reveal" data-d="1">William Hewitt &amp; Company is a private, long-term acquisition firm. Free from the constraints of fixed-term funds, we evaluate companies based on their compounding potential over decades rather than artificial exit timelines. Our mandate is straightforward: protect equity, optimize underlying unit economics, and respect the legacies of the businesses we join.</p>
-            <p class="firm-body reveal" data-d="1" style="margin-top:1.25rem;">Our operational intervention is similarly restrained. We do not disrupt stable organizations for the sake of activity. Instead, we isolate the specific financial and commercial levers that build compounding enterprise value without introducing structural risk.</p>
+            <h2 class="firm-statement reveal">We invest selectively to build <span class="em">permanent value</span></h2>
+            <p class="firm-body reveal" data-d="1">William Hewitt &amp; Company is a private, long-term acquisition firm. Free from the constraints of fixed-term funds, we evaluate companies on their compounding potential over decades rather than artificial exit timelines. Our involvement is deliberately restrained: we protect equity, respect the legacies of the businesses we join, and isolate the specific financial and commercial levers that build enterprise value without introducing structural risk.</p>
           </div>
           <div class="firm-side reveal" data-d="2">
             <span class="firm-focus-h">Where we focus</span>
@@ -571,7 +570,7 @@
         <div>
           <span class="idx reveal">04 · Contact</span>
           <h2 class="reveal" data-d="1">Begin the <span class="em">conversation</span></h2>
-          <p class="reveal" data-d="1" style="margin-top:1.5rem; color:var(--ink-2); max-width:44ch; font-size:var(--fs-prose);">Send us a brief note and we'll get back to you.</p>
+          <p class="reveal" data-d="1" style="margin-top:2.6rem; color:var(--ink-2); max-width:44ch; font-size:var(--fs-prose);">Send us a brief note and we'll get back to you.</p>
           <div class="contact-rows reveal" data-d="2">
             <div class="crow"><span class="k">Email</span><a class="v" href="mailto:hello@williamhewitt.co">hello@williamhewitt.co</a></div>
             <div class="crow"><span class="k">Where</span><span class="v">New York, NY</span></div>
