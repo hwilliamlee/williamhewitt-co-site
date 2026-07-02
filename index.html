@@ -761,14 +761,18 @@
 
       const COLOR_A = [0.353, 0.420, 0.486];  // left side of the weave
       const COLOR_B = [0.353, 0.420, 0.486];  // right side of the weave
-      const AMPLITUDE = 1.05;
-      // Phone runs the standard 0.8 line alpha, desktop keeps the approved 0.4 ("50% more transparent").
-      // Set HERE, baked into the shader source at compile: the CSS-side boost (SVG feFuncA filter on the
-      // canvas) rendered in this dev Chrome but blanked the canvas on WebKit AND on the operator's Chrome —
-      // filter-on-WebGL is environment-fragile; shader-level alpha renders wherever WebGL itself does.
-      // (Evaluated once at load; crossing 767px needs a reload — fine for a real device, which never does.)
-      const OPACITY = matchMedia('(max-width: 767px)').matches ? 0.8 : 0.4;
-      const LIFT_PX = 96;  // raise the weave by this many CSS pixels (96 = 1 inch)
+      const AMPLITUDE = 1.05; // desktop swing (phone runs 0.85 — set at the uniform below: the tighter phone ribbon needs a calmer breathe so its edges hold the operator's placement)
+      // Phone-conditional consts (evaluated once at load; crossing 767px needs a reload — fine for a real
+      // device, which never does). Baked into the shader at compile: CSS-side levers (the SVG feFuncA filter)
+      // rendered in dev Chrome but blanked the canvas on WebKit AND the operator's Chrome — filter-on-WebGL
+      // is environment-fragile; shader-level values render wherever WebGL itself does.
+      const PHONE = matchMedia('(max-width: 767px)').matches;
+      const OPACITY = PHONE ? 0.8 : 0.4;   // phone: the standard alpha; desktop keeps the approved "50% more transparent"
+      // Phone lift/spread (operator-specified 2026-07-02): the wave's top edge sits between the "Allocation,"
+      // and "Discipline," headline lines and its bottom stops at the lede's top — tighter, higher ribbon.
+      // Both are fixed CSS-px offsets from the hero's center, so they track the flex-centered text block at
+      // any viewport height (text center == hero center; DPR cancels in the uCenter math).
+      const LIFT_PX = PHONE ? 125 : 96;  // raise the weave by this many CSS pixels (desktop: 96 = 1 inch). Phone 125 anchors the band's TOP edge at the headline line-2/3 boundary through its slow noise-drift, keeping the bottom short of the lede at all phases (operator corridor spec + Codex hard-edge finding, 2026-07-02).
       const SPEED = 0.50; // 1.0 = the approved pace
 
       const vert = `attribute vec2 position; void main(){ gl_Position = vec4(position, 0.0, 1.0); }`;
@@ -780,7 +784,7 @@
         const int u_line_count = 30; const float u_line_width = 2.0; const float u_line_blur = 4.4;
         const float OPACITY = ${OPACITY}; // interpolated from the JS const above: 0.8 phone / 0.4 desktop
         uniform float uCenter;       // weave center (0..1 of hero height), set from JS
-        const float DIST = 0.32;        // vertical spread of the weave
+        const float DIST = ${PHONE ? 0.12 : 0.32};        // vertical spread of the weave (tighter ribbon on phone — operator placement spec 2026-07-02)
         const float MIRROR = 0.0;    // 1.0 adds a vertically mirrored twin
         float Perlin2D(vec2 P){ vec2 Pi=floor(P); vec4 Pf_Pfmin1=P.xyxy-vec4(Pi,Pi+1.0);
           vec4 Pt=vec4(Pi.xy,Pi.xy+1.0); Pt=Pt-floor(Pt*(1.0/71.0))*71.0; Pt+=vec2(26.0,161.0).xyxy;
@@ -832,7 +836,7 @@
             uAmp = U('uAmplitude'), uMouse = U('uMouse');
       gl.uniform3f(U('uColorA'), COLOR_A[0], COLOR_A[1], COLOR_A[2]);
       gl.uniform3f(U('uColorB'), COLOR_B[0], COLOR_B[1], COLOR_B[2]);
-      gl.uniform1f(uAmp, AMPLITUDE); gl.uniform2f(uMouse, 0.5, 0.5);
+      gl.uniform1f(uAmp, PHONE ? 0.62 : AMPLITUDE); gl.uniform2f(uMouse, 0.5, 0.5); // phone 0.62: the collective noise-drift scales with amplitude — this holds the ribbon's edges inside the operator's corridor at every phase of the cycle (measured ±25px at 0.62 vs ±31 at 0.75)
       gl.clearColor(0, 0, 0, 0);
 
       function size() {
