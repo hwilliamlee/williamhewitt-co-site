@@ -396,8 +396,10 @@
          viewed at load with the bars expanded. svh line kept as fallback for pre-lvh browsers. */
       .block { min-height: calc(100svh - var(--navh) - 1px); min-height: calc(100lvh - var(--navh) - 1px); }
       #firm, #approach, #contact { display: flex; flex-direction: column; justify-content: safe center; }
-      footer { min-height: 100svh; min-height: 100lvh; display: flex; align-items: center; } /* final view = full navy "blue box" filling the screen (reviewer-flagged 2026-06-18; Codex-endorsed — no scroll-snap, just fill) */
-      footer > .shell { width: 100%; }
+      /* Footer is a normal short strip again — the 06-18 full-screen navy "blue box" (min-height 100svh +
+         centered) is REVERSED per operator 2026-07-02 ("a full snap page of footer makes no sense, and the
+         centering makes even less"). It keeps scroll-snap-align:end as the page-end anchor, so the final
+         view = Contact's tail + footer, same as desktop. */
     }
     /* Nav collapses to the burger drawer ≤900px: the enlarged 1.4rem links + larger brand
        (operator-chosen 2026-06-17) need a wide bar; below ~900px the brand would collide with
@@ -423,13 +425,21 @@
         --fs-idx: 0.875rem; /* section eyebrows 11.2→14px on phone (reviewer "bump eyebrows"; operator-approved 2026-06-18 via EYEBROW-COMPARE) */
       }
       .hero-eyebrow { display: none; } /* remove the "— William Hewitt & Company" hero tag on phone — redundant w/ nav+footer, decluttered the cramped hero (reviewer Landing #2; operator-approved phone-only) */
-      /* Phone-only weave boost (operator, 2026-07-01). The desktop mask is deliberately KEPT — same wave
+      /* Phone-only weave boost (operator, 2026-07-01/02). The desktop mask is deliberately KEPT — same wave
          anatomy as web/tablet: dense flat-left line-start hidden, wave flowing in from the open right. (A
-         fuller mask reveal was tried and operator-rejected: it drew the flat-left streak across the headline.)
-         Strength comes from #threads-boost instead — an inline SVG feFuncA slope-2 filter that lifts the
-         shader's 0.4 line alpha to the 0.8 "standard" — plus full layer opacity. Shader/JS untouched. */
-      #hero-canvas { filter: url(#threads-boost); opacity: 1; }
-      .firm-statement { font-size: 1.6rem; } /* resized directly — .firm-statement uses its own clamp (line ~291), not the --fs-statement token (which has no live consumer) */
+         fuller mask reveal was operator-rejected: it drew the flat-left streak across the headline.) The
+         strength itself is set in the WebGL script (OPACITY 0.8 phone / 0.4 desktop — the SVG-filter approach
+         blanked the canvas on WebKit and the operator's Chrome). This rule only lifts the layer to full. */
+      #hero-canvas { opacity: 1; }
+      .firm-statement { font-size: var(--fs-h2); } /* was 1.6rem — the one phone outlier against the "unified section heading" token (operator-flagged 2026-07-02: adjacent 02 vs 03 heads visibly mismatched); now all four sections match */
+      /* Firm must FIT one phone screen (operator 2026-07-02: "too snappy, can't read the lower parts").
+         Its content ran ~120px past the snap box, and with mandatory snap the overhang needs a precise slow
+         drag to read — so compress the section to fit INSTEAD of weakening the snap (y mandatory is locked). */
+      .firm.block { padding-block: 1.25rem; }
+      .firm-grid { gap: 1.25rem; }
+      .firm-body { font-size: 1rem; line-height: 1.5; margin-top: 1rem; } /* 16px = this repo's phone prose floor */
+      .firm-focus li { padding-block: 0.5rem; font-size: 1rem; }
+      .firm-focus-h { padding-block: 0.6rem 0.3rem; }
       /* Contact rhythm on phone (operator-flagged 2026-07-01: the desktop-tuned gaps read oversized against
          the reduced phone type scale — 42px under a 22px heading, 87px rows). Tighten; ≥768 untouched. */
       .contact-sub { margin-top: 1.25rem; }
@@ -453,7 +463,7 @@
   <script>document.documentElement.classList.add('js');</script>
 </head>
 <body>
-  <svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="wh-mono" viewBox="0 0 783 783"><path fill="currentColor" fill-rule="evenodd" transform="translate(0.0 0.5)" d="M 360.5 1.1 C 314.2 5.4, 276.4 14.5, 238.5 30.7 C -46.7 152.3, -83.6 539.2, 173.2 714.3 C 180.2 719.1, 186.2 723, 186.5 723 C 186.7 723, 190.0 724.9, 193.7 727.1 C 382.3 842.7, 639.7 767.5, 740.7 567.5 C 872.4 306.6, 688.7 5.2, 395 0.5 C 381.5 0.3, 366 0.5, 360.5 1.1 M 358.5 35.0 C 341.0 36.1, 314.3 40.8, 296 45.9 C 292.4 46.9, 285.9 48.8, 281.5 50.0 C 277.1 51.3, 266.8 54.9, 258.5 58.2 C 16.7 153.2, -44.0 466.2, 144.1 648.5 C 167.5 671.2, 187.2 685.9, 218.2 703.6 C 323.3 763.7, 463.7 763.0, 570 701.7 C 774.0 584.2, 812.1 302.9, 646.4 137.5 C 571.2 62.4, 474.2 27.9, 358.5 35.0 M 597.3 218.7 C 552.2 219.1, 556.7 218.1, 555.5 227.1 L 554.8 231.7 561.2 232.9 C 569.8 234.5, 579.6 237.8, 581.0 239.5 C 582.4 241.2, 582.3 241.9, 575.6 267.5 C 572.7 278.5, 569.6 290.6, 568.7 294.5 C 566.9 301.8, 558.0 333.1, 552.6 351.0 C 549.9 360.0, 549.1 361.5, 547.0 362.1 C 543.1 363.2, 462.2 363.1, 461.5 362.1 C 461.2 361.6, 464.4 350.4, 468.6 337.3 C 480.5 299.9, 488.6 274.4, 492.0 263.2 C 498.0 243.2, 501.7 238.4, 514.3 233.8 L 520.1 231.7 519.8 225.6 L 519.5 219.5 467.5 219.5 L 415.5 219.5 415.2 226.3 C 414.9 232.8, 415.0 233.0, 417.7 234.2 C 437.4 242.3, 437.3 240.8, 421.5 290.5 C 418.0 301.5, 410.5 324.9, 405.0 342.5 C 394.1 376.7, 393.6 378.0, 392.5 372.8 C 391.8 369.7, 386.3 351.1, 372.0 304 C 361.9 270.7, 357 251.5, 357 245.3 C 357 240.7, 362.4 237.4, 376.3 233.5 L 382 231.9 382 226.6 C 382 218.5, 386.2 219.0, 320.9 219.2 L 262.5 219.5 262.2 226.1 L 261.9 232.6 267.2 233.9 C 281.8 237.6, 295 249.9, 295 260 C 295 260.5, 297.5 269.7, 300.6 280.2 C 303.7 290.8, 307.9 305.6, 310.0 313 C 312.1 320.4, 314.3 327.7, 314.8 329.1 C 316.8 334.3, 299.7 386.2, 277.1 443.7 C 275.0 449.3, 273.2 452.4, 272.8 451.6 C 271.7 449.6, 245.7 370.0, 233.5 331 C 229.8 319.2, 224.1 301.4, 220.9 291.5 C 210.8 260.4, 207.4 245.0, 209.8 241.3 C 210.5 240.2, 215.0 238.0, 224.3 234.2 C 227.0 233.0, 227.1 232.8, 226.8 226.3 L 226.5 219.5 174.5 219.5 L 122.5 219.5 122.2 225.6 L 121.9 231.7 127.8 233.8 C 143.3 239.5, 141.9 236.7, 162.5 302 C 167.3 317.1, 173.8 337.6, 177.0 347.5 C 180.2 357.4, 186.1 375.6, 190.0 388 C 194.0 400.4, 207.6 442, 220.3 480.5 L 243.5 550.5 253 550.8 C 266.2 551.2, 266.3 551.2, 268.8 543.8 C 269.9 540.3, 275.7 524.5, 281.8 508.5 C 287.8 492.6, 295.2 472.3, 298.3 463.5 C 311.1 426.9, 320 400.9, 320 400.0 C 320 397.2, 321.8 399.7, 323.5 404.8 C 333.7 435.3, 352.4 487.9, 365.3 522.1 C 370.6 536.2, 375 548.3, 375 548.9 C 375 550.6, 378.7 551.1, 388.9 550.8 L 398.2 550.5 400.1 545.5 C 403.3 537.1, 433.3 447.4, 443.0 417 C 448.0 401.3, 452.4 387.8, 452.9 387 C 454.6 383.9, 542 384.7, 542 387.8 C 542 389.4, 533.6 420.4, 522.6 459 C 519.1 471.4, 514.1 488.9, 511.5 498 C 502.8 528.8, 499.7 532.5, 481.7 533.8 C 471.8 534.4, 469.9 535.8, 469.0 543.1 C 468.6 546.1, 468.4 548.8, 468.7 549.3 C 469.3 550.4, 579.8 550.2, 582.0 549.0 C 585.1 547.4, 587.1 538.9, 585.4 534.6 C 584.9 533.3, 583.2 533, 576.8 533 C 556.4 533, 555.9 538.0, 585.0 434 C 586.8 427.7, 590.4 415.1, 593.0 406 C 595.7 396.9, 598.6 386.6, 599.5 383 C 600.4 379.4, 603.5 368.2, 606.5 358 C 619.5 312.9, 624.1 296.7, 627.0 284.5 C 636.9 243.9, 639.8 238.8, 656.2 232.8 C 662.4 230.6, 662.1 231.1, 663.3 220 C 663.5 218.3, 662.9 218.3, 597.3 218.7 M 0.3 390.5 C 0.3 394.9, 0.5 396.6, 0.7 394.2 C 0.9 391.9, 0.9 388.3, 0.7 386.2 C 0.5 384.2, 0.3 386.1, 0.3 390.5"/></symbol><filter id="threads-boost"><feComponentTransfer><feFuncA type="linear" slope="2"/></feComponentTransfer></filter></svg>
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="wh-mono" viewBox="0 0 783 783"><path fill="currentColor" fill-rule="evenodd" transform="translate(0.0 0.5)" d="M 360.5 1.1 C 314.2 5.4, 276.4 14.5, 238.5 30.7 C -46.7 152.3, -83.6 539.2, 173.2 714.3 C 180.2 719.1, 186.2 723, 186.5 723 C 186.7 723, 190.0 724.9, 193.7 727.1 C 382.3 842.7, 639.7 767.5, 740.7 567.5 C 872.4 306.6, 688.7 5.2, 395 0.5 C 381.5 0.3, 366 0.5, 360.5 1.1 M 358.5 35.0 C 341.0 36.1, 314.3 40.8, 296 45.9 C 292.4 46.9, 285.9 48.8, 281.5 50.0 C 277.1 51.3, 266.8 54.9, 258.5 58.2 C 16.7 153.2, -44.0 466.2, 144.1 648.5 C 167.5 671.2, 187.2 685.9, 218.2 703.6 C 323.3 763.7, 463.7 763.0, 570 701.7 C 774.0 584.2, 812.1 302.9, 646.4 137.5 C 571.2 62.4, 474.2 27.9, 358.5 35.0 M 597.3 218.7 C 552.2 219.1, 556.7 218.1, 555.5 227.1 L 554.8 231.7 561.2 232.9 C 569.8 234.5, 579.6 237.8, 581.0 239.5 C 582.4 241.2, 582.3 241.9, 575.6 267.5 C 572.7 278.5, 569.6 290.6, 568.7 294.5 C 566.9 301.8, 558.0 333.1, 552.6 351.0 C 549.9 360.0, 549.1 361.5, 547.0 362.1 C 543.1 363.2, 462.2 363.1, 461.5 362.1 C 461.2 361.6, 464.4 350.4, 468.6 337.3 C 480.5 299.9, 488.6 274.4, 492.0 263.2 C 498.0 243.2, 501.7 238.4, 514.3 233.8 L 520.1 231.7 519.8 225.6 L 519.5 219.5 467.5 219.5 L 415.5 219.5 415.2 226.3 C 414.9 232.8, 415.0 233.0, 417.7 234.2 C 437.4 242.3, 437.3 240.8, 421.5 290.5 C 418.0 301.5, 410.5 324.9, 405.0 342.5 C 394.1 376.7, 393.6 378.0, 392.5 372.8 C 391.8 369.7, 386.3 351.1, 372.0 304 C 361.9 270.7, 357 251.5, 357 245.3 C 357 240.7, 362.4 237.4, 376.3 233.5 L 382 231.9 382 226.6 C 382 218.5, 386.2 219.0, 320.9 219.2 L 262.5 219.5 262.2 226.1 L 261.9 232.6 267.2 233.9 C 281.8 237.6, 295 249.9, 295 260 C 295 260.5, 297.5 269.7, 300.6 280.2 C 303.7 290.8, 307.9 305.6, 310.0 313 C 312.1 320.4, 314.3 327.7, 314.8 329.1 C 316.8 334.3, 299.7 386.2, 277.1 443.7 C 275.0 449.3, 273.2 452.4, 272.8 451.6 C 271.7 449.6, 245.7 370.0, 233.5 331 C 229.8 319.2, 224.1 301.4, 220.9 291.5 C 210.8 260.4, 207.4 245.0, 209.8 241.3 C 210.5 240.2, 215.0 238.0, 224.3 234.2 C 227.0 233.0, 227.1 232.8, 226.8 226.3 L 226.5 219.5 174.5 219.5 L 122.5 219.5 122.2 225.6 L 121.9 231.7 127.8 233.8 C 143.3 239.5, 141.9 236.7, 162.5 302 C 167.3 317.1, 173.8 337.6, 177.0 347.5 C 180.2 357.4, 186.1 375.6, 190.0 388 C 194.0 400.4, 207.6 442, 220.3 480.5 L 243.5 550.5 253 550.8 C 266.2 551.2, 266.3 551.2, 268.8 543.8 C 269.9 540.3, 275.7 524.5, 281.8 508.5 C 287.8 492.6, 295.2 472.3, 298.3 463.5 C 311.1 426.9, 320 400.9, 320 400.0 C 320 397.2, 321.8 399.7, 323.5 404.8 C 333.7 435.3, 352.4 487.9, 365.3 522.1 C 370.6 536.2, 375 548.3, 375 548.9 C 375 550.6, 378.7 551.1, 388.9 550.8 L 398.2 550.5 400.1 545.5 C 403.3 537.1, 433.3 447.4, 443.0 417 C 448.0 401.3, 452.4 387.8, 452.9 387 C 454.6 383.9, 542 384.7, 542 387.8 C 542 389.4, 533.6 420.4, 522.6 459 C 519.1 471.4, 514.1 488.9, 511.5 498 C 502.8 528.8, 499.7 532.5, 481.7 533.8 C 471.8 534.4, 469.9 535.8, 469.0 543.1 C 468.6 546.1, 468.4 548.8, 468.7 549.3 C 469.3 550.4, 579.8 550.2, 582.0 549.0 C 585.1 547.4, 587.1 538.9, 585.4 534.6 C 584.9 533.3, 583.2 533, 576.8 533 C 556.4 533, 555.9 538.0, 585.0 434 C 586.8 427.7, 590.4 415.1, 593.0 406 C 595.7 396.9, 598.6 386.6, 599.5 383 C 600.4 379.4, 603.5 368.2, 606.5 358 C 619.5 312.9, 624.1 296.7, 627.0 284.5 C 636.9 243.9, 639.8 238.8, 656.2 232.8 C 662.4 230.6, 662.1 231.1, 663.3 220 C 663.5 218.3, 662.9 218.3, 597.3 218.7 M 0.3 390.5 C 0.3 394.9, 0.5 396.6, 0.7 394.2 C 0.9 391.9, 0.9 388.3, 0.7 386.2 C 0.5 384.2, 0.3 386.1, 0.3 390.5"/></symbol></svg>
 
   <!-- ===================== NAV ===================== -->
   <header id="header">
@@ -752,6 +762,12 @@
       const COLOR_A = [0.353, 0.420, 0.486];  // left side of the weave
       const COLOR_B = [0.353, 0.420, 0.486];  // right side of the weave
       const AMPLITUDE = 1.05;
+      // Phone runs the standard 0.8 line alpha, desktop keeps the approved 0.4 ("50% more transparent").
+      // Set HERE, baked into the shader source at compile: the CSS-side boost (SVG feFuncA filter on the
+      // canvas) rendered in this dev Chrome but blanked the canvas on WebKit AND on the operator's Chrome —
+      // filter-on-WebGL is environment-fragile; shader-level alpha renders wherever WebGL itself does.
+      // (Evaluated once at load; crossing 767px needs a reload — fine for a real device, which never does.)
+      const OPACITY = matchMedia('(max-width: 767px)').matches ? 0.8 : 0.4;
       const LIFT_PX = 96;  // raise the weave by this many CSS pixels (96 = 1 inch)
       const SPEED = 0.50; // 1.0 = the approved pace
 
@@ -762,7 +778,7 @@
         uniform float uDPR;          // device pixel ratio — keeps thread thickness in fixed CSS px
         #define PI 3.1415926538
         const int u_line_count = 30; const float u_line_width = 2.0; const float u_line_blur = 4.4;
-        const float OPACITY = 0.4; // 0.8 = standard; this file is 50% more transparent
+        const float OPACITY = ${OPACITY}; // interpolated from the JS const above: 0.8 phone / 0.4 desktop
         uniform float uCenter;       // weave center (0..1 of hero height), set from JS
         const float DIST = 0.32;        // vertical spread of the weave
         const float MIRROR = 0.0;    // 1.0 adds a vertically mirrored twin
