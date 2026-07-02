@@ -432,14 +432,16 @@
          blanked the canvas on WebKit and the operator's Chrome). This rule only lifts the layer to full. */
       #hero-canvas { opacity: 1; }
       .firm-statement { font-size: var(--fs-h2); } /* was 1.6rem — the one phone outlier against the "unified section heading" token (operator-flagged 2026-07-02: adjacent 02 vs 03 heads visibly mismatched); now all four sections match */
-      /* Firm must FIT one phone screen (operator 2026-07-02: "too snappy, can't read the lower parts").
-         Its content ran ~120px past the snap box, and with mandatory snap the overhang needs a precise slow
-         drag to read — so compress the section to fit INSTEAD of weakening the snap (y mandatory is locked). */
-      .firm.block { padding-block: 1.25rem; }
-      .firm-grid { gap: 1.25rem; }
-      .firm-body { font-size: 1rem; line-height: 1.5; margin-top: 1rem; } /* 16px = this repo's phone prose floor */
-      .firm-focus li { padding-block: 0.5rem; font-size: 1rem; }
-      .firm-focus-h { padding-block: 0.6rem 0.3rem; }
+      /* Firm mirrors Practice on phone (operator 2026-07-02 round 4): snap to the section top, then scroll
+         freely through full-size content. The round-3 "compress to fit one screen" shrink (padding/gap/prose/
+         focus-list to 16px) is REVERSED — it broke text-size symmetry with the other sections. With base type
+         restored Firm grows past one viewport, which puts its snap points >1 viewport apart — the same
+         geometry that lets Practice free-scroll within itself under y mandatory. */
+      /* Practice rows are informational on phone — the whole-row link to #contact (original markup) reads as
+         a mis-tap once universal snap made the jump land as a hard full-screen cut to Contact (operator-flagged
+         2026-07-02). Kill the tap and the arrow that promises it; desktop hover affordance unchanged. */
+      .work { pointer-events: none; }
+      .work-ar { display: none; }
       /* Contact rhythm on phone (operator-flagged 2026-07-01: the desktop-tuned gaps read oversized against
          the reduced phone type scale — 42px under a 22px heading, 87px rows). Tighten; ≥768 untouched. */
       .contact-sub { margin-top: 1.25rem; }
@@ -735,6 +737,14 @@
       formStatus.innerHTML = '✓ Thank you. We will be in touch with you shortly.<span class="fallback">Your email app should open. If nothing happens, write to <a href="mailto:hello@williamhewitt.co">hello@williamhewitt.co</a>.</span>';
       window.location.href = `mailto:hello@williamhewitt.co?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
     });
+
+    // Practice rows are informational on phone (operator 2026-07-02): removing href makes them
+    // non-links for keyboard/AT too, not just touch (Codex Gate-2 finding — pointer-events alone
+    // left them Enter-activatable). Text stays in the a11y tree. Load-once matchMedia, same
+    // accepted pattern as the shader consts (crossing 767px needs a reload; real devices don't).
+    if (matchMedia('(max-width: 767px)').matches) {
+      document.querySelectorAll('a.work').forEach(a => a.removeAttribute('href'));
+    }
 
     // Reveal on scroll
     // Observe below-the-fold reveals; hero reveals are already visible via CSS (harmless if observed too).
